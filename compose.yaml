@@ -1,0 +1,4 @@
+services:
+  dummy:
+    image: busybox
+    command: sleep infinity
