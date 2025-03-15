@@ -1,10 +1,6 @@
 package sk.dilino.docsignsystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 @Entity
 public class Document {
@@ -12,19 +8,32 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob // For storing large binary data (PDF)
-    private byte[] pdfData;
+    private String name;
 
-    @Lob // For storing signature as base64 or binary
-    private byte[] signature;
+    @Lob
+    private byte[] content;
 
+    @Lob
+    private String signature;
+
+    // Constructors
     public Document() {}
+
+    public Document(String name, byte[] content) {
+        this.name = name;
+        this.content = content;
+    }
 
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public byte[] getPdfData() { return pdfData; }
-    public void setPdfData(byte[] pdfData) { this.pdfData = pdfData; }
-    public byte[] getSignature() { return signature; }
-    public void setSignature(byte[] signature) { this.signature = signature; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public byte[] getContent() { return content; }
+    public void setContent(byte[] content) { this.content = content; }
+
+    public String getSignature() { return signature; }
+    public void setSignature(String signature) { this.signature = signature; }
 }

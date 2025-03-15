@@ -1,0 +1,17 @@
+.container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: $spacing-unit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: $primary-color;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: $spacing-unit * 1.5;
+  text-align: center;
+}

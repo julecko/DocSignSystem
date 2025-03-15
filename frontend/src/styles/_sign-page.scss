@@ -1,0 +1,50 @@
+.sign-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  gap: $spacing-unit * 1.5;
+
+  .pdf-viewer {
+    width: 100%;
+    max-width: 650px;
+    height: 750px;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    box-shadow: $shadow;
+    background: white;
+  }
+
+  .signature-container {
+    background: white;
+    padding: $spacing-unit;
+    border-radius: 12px;
+    box-shadow: $shadow;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+
+    .js-signature {
+      border: 2px solid $primary-color;
+      border-radius: 8px;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-unit;
+  }
+
+  @media (max-width: 768px) {
+    .pdf-viewer {
+      height: 500px;
+      max-width: 90%;
+    }
+
+    .signature-container {
+      max-width: 300px;
+    }
+  }
+}

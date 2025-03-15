@@ -1,0 +1,40 @@
+.upload-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  gap: $spacing-unit;
+
+  .upload-form {
+    background: white;
+    padding: $spacing-unit * 2;
+    border-radius: 12px;
+    box-shadow: $shadow;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+
+    input[type="file"] {
+      display: block;
+      margin: 0 auto $spacing-unit;
+      padding: 12px;
+      border: 2px dashed $border-color;
+      border-radius: 8px;
+      width: 100%;
+      background: $background-color;
+      transition: border-color 0.3s ease;
+
+      &:hover {
+        border-color: $secondary-color;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .upload-form {
+      padding: $spacing-unit;
+      max-width: 90%;
+    }
+  }
+}
