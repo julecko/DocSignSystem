@@ -1,4 +1,16 @@
+version: '3.8'
 services:
-  dummy:
-    image: busybox
-    command: sleep infinity
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: docsign_db
+      MYSQL_USER: docsign_user
+      MYSQL_PASSWORD: docsign_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
