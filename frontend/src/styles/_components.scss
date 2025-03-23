@@ -1,3 +1,6 @@
+@use 'variables' as *;
+@use 'sass:color';
+
 button {
   background-color: $secondary-color;
   color: white;
@@ -11,14 +14,14 @@ button {
   box-shadow: $shadow;
 
   &:hover {
-    background-color: darken($secondary-color, 15%);
+    background-color: color.adjust($secondary-color, $lightness: -15%);
     transform: translateY(-2px);
   }
 
   &.accent {
     background-color: $accent-color;
     &:hover {
-      background-color: darken($accent-color, 15%);
+      background-color: color.adjust($accent-color, $lightness: -15%);
     }
   }
 }

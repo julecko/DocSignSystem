@@ -10,7 +10,6 @@ function SignPage() {
     const [pdfUrl, setPdfUrl] = useState('');
 
     useEffect(() => {
-        // Fetch PDF
         axios
             .get(`http://localhost:8080/api/document/${id}`, { responseType: 'blob' })
             .then((response) => {

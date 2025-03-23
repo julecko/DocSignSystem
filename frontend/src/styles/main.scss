@@ -1,7 +1,7 @@
-@import 'variables';
-@import 'reset';
-@import 'layout';
-@import 'components';
-@import 'upload-page';
-@import 'sign-page';
-@import 'documents-page';
+@use './variables' as *;
+@use './reset';
+@use './layout';
+@use './components';
+@use './upload-page';
+@use './sign-page';
+@use './documents-page';

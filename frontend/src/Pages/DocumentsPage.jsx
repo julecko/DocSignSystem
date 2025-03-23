@@ -5,12 +5,10 @@ function DocumentsPage() {
     const [documents, setDocuments] = useState([]);
 
     useEffect(() => {
-        // Fetch list of documents
         axios
             .get('http://localhost:8080/api/documents')
             .then((response) => {
                 const docs = response.data;
-                // Fetch each PDF as a blob
                 Promise.all(
                     docs.map((doc) =>
                         axios
@@ -26,7 +24,6 @@ function DocumentsPage() {
             })
             .catch((error) => console.error('Failed to fetch documents:', error));
 
-        // Cleanup blob URLs on unmount
         return () => {
             documents.forEach((doc) => {
                 if (doc.pdfBlobUrl) URL.revokeObjectURL(doc.pdfBlobUrl);
@@ -64,15 +61,6 @@ function DocumentsPage() {
                                     type="application/pdf"
                                     className="pdf-preview"
                                 />
-                            )}
-                            {doc.signature ? (
-                                <img
-                                    src={doc.signature}
-                                    alt="Signature"
-                                    className="signature-preview"
-                                />
-                            ) : (
-                                <p className="no-signature">No signature</p>
                             )}
                             <button onClick={() => handleDownload(doc.id)}>Download</button>
                         </div>

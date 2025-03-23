@@ -8,23 +8,23 @@ public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_birth_number")
+    private User user;
+
     private String name;
 
     @Lob
     private byte[] content;
 
-    @Lob
-    private String signature;
-
-    // Constructors
     public Document() {}
 
-    public Document(String name, byte[] content) {
+    public Document(String name, byte[] content, User user) {
         this.name = name;
         this.content = content;
+        this.user = user;
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -33,7 +33,4 @@ public class Document {
 
     public byte[] getContent() { return content; }
     public void setContent(byte[] content) { this.content = content; }
-
-    public String getSignature() { return signature; }
-    public void setSignature(String signature) { this.signature = signature; }
 }
