@@ -160,49 +160,39 @@ function UploadPage() {
                 </div>
 
                 <div className="form-row">
-                    {!userExists ? (
-                        <>
-                            <div className="form-group">
-                                <label htmlFor="name">Full Name (Optional)</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="Enter full name"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email (Optional)</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Enter email"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="phone">Phone (Optional)</label>
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
-                                    placeholder="Enter phone number"
-                                />
-                            </div>
-                        </>
-                    ) : (
-                        <div className="form-group disabled-fields full-width">
-                            <label>Full Name</label>
-                            <input type="text" value={name} disabled />
-                            <label>Email</label>
-                            <input type="email" value={email} disabled />
-                            <label>Phone</label>
-                            <input type="tel" value={phone} disabled />
-                        </div>
-                    )}
+                    <div className={`form-group ${userExists ? 'disabled' : ''}`}>
+                        <label htmlFor="name">Full Name {userExists ? '' : '(Optional)'}</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Enter full name"
+                            disabled={userExists}
+                        />
+                    </div>
+                    <div className={`form-group ${userExists ? 'disabled' : ''}`}>
+                        <label htmlFor="email">Email {userExists ? '' : '(Optional)'}</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter email"
+                            disabled={userExists}
+                        />
+                    </div>
+                    <div className={`form-group ${userExists ? 'disabled' : ''}`}>
+                        <label htmlFor="phone">Phone {userExists ? '' : '(Optional)'}</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="Enter phone number"
+                            disabled={userExists}
+                        />
+                    </div>
                 </div>
 
                 <div className="form-group">

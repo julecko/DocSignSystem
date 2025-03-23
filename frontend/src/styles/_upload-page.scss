@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'sass:math';
+@use 'sass:color';
 
 .upload-page {
   display: flex;
@@ -25,7 +26,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     width: 100%;
     max-width: 1000px;
-    border: 1px solid lighten($border-color, 10%);
+    border: 1px solid color.adjust($border-color, $lightness: 10%);
     transition: box-shadow 0.3s ease;
 
     &:hover {
@@ -45,14 +46,10 @@
       flex: 1;
       min-width: 300px;
 
-      &.full-width {
-        flex: 100%;
-      }
-
       label {
         display: block;
         font-weight: 600;
-        color: darken($primary-color, 10%);
+        color: color.adjust($primary-color, $lightness: -10%);
         margin-bottom: math.div($spacing-unit, 1.5);
         font-size: 1.2rem;
       }
@@ -81,6 +78,16 @@
         }
       }
 
+      &.disabled {
+        input {
+          background-color: #f0f0f0;
+          color: color.adjust($text-color, $lightness: -20%);
+          cursor: not-allowed;
+          border-color: color.adjust($border-color, $lightness: 10%);
+          opacity: 0.9;
+        }
+      }
+
       input[type="file"] {
         display: block;
         padding: 16px;
@@ -96,16 +103,6 @@
         }
       }
 
-      &.disabled-fields {
-        input {
-          background-color: #f0f0f0;
-          color: darken($text-color, 20%);
-          cursor: not-allowed;
-          border-color: lighten($border-color, 10%);
-          opacity: 0.9;
-        }
-      }
-
       &.birth-number-group {
         position: relative;
 
@@ -115,7 +112,7 @@
           left: 0;
           right: 0;
           background: white;
-          border: 1px solid lighten($border-color, 10%);
+          border: 1px solid color.adjust($border-color, $lightness: 10%);
           border-radius: 8px;
           max-height: 300px;
           overflow-y: auto;
@@ -165,7 +162,7 @@
       transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 
       &:hover:not(:disabled) {
-        background-color: darken($secondary-color, 10%);
+        background-color: color.adjust($secondary-color, $lightness: -10%);
         transform: translateY(-3px);
         box-shadow: 0 4px 15px rgba($secondary-color, 0.3);
       }

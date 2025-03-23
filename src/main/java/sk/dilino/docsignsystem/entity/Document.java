@@ -1,5 +1,6 @@
 package sk.dilino.docsignsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,7 +10,8 @@ public class Document {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_birth_number")
+    @JoinColumn(name = "birth_number")
+    @JsonBackReference
     private User user;
 
     private String name;
@@ -33,4 +35,8 @@ public class Document {
 
     public byte[] getContent() { return content; }
     public void setContent(byte[] content) { this.content = content; }
+
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
 }
