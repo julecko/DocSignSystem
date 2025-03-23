@@ -20,16 +20,12 @@ function SignPage() {
 
         if (signatureRef.current) {
             $(signatureRef.current).jqSignature({
-                width: 300,
+                width: 500,
                 height: 150,
                 border: '1px solid black',
                 background: '#FFFFFF',
                 lineColor: '#000000',
                 lineWidth: 2,
-            });
-
-            $(signatureRef.current).on('jq.signature.changed', () => {
-                console.log('Signature changed');
             });
         }
 
@@ -69,8 +65,7 @@ function SignPage() {
             {pdfUrl && <embed src={pdfUrl} width="500" height="600" type="application/pdf" />}
             <div
                 ref={signatureRef}
-                className="js-signature" // Optional: for consistency with docs
-                style={{ border: '1px solid black', width: '300px', height: '150px' }}
+                className="js-signature"
             ></div>
             <button onClick={handleSave}>Save Signature</button>
             <button onClick={handleClear}>Clear Signature</button>

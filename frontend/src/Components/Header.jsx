@@ -1,12 +1,35 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import '../styles/main.scss';
 
 function Header() {
     return (
-        <nav>
-            <Link to="/">Home</Link> |{' '}
-            <Link to="/sign">Sign Document</Link> |{' '}
-            <Link to="/documents">View Documents</Link>
-        </nav>
+        <header className="site-header">
+            <div className="header-container">
+                <h1 className="logo">
+                    <NavLink to="/">DocSign</NavLink>
+                </h1>
+                <nav className="nav-menu">
+                    <ul>
+                        <li>
+                            <NavLink to="/" exact activeClassName="active">
+                                Home
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/documents" activeClassName="active">
+                                Documents
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/profiles" activeClassName="active">
+                                Profiles
+                            </NavLink>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
     );
 }
 
