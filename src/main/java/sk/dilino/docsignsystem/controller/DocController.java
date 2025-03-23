@@ -48,8 +48,10 @@ public class DocController {
     }
 
     @GetMapping("/documents")
-    public ResponseEntity<List<Document>> getAllDocuments() {
-        List<Document> documents = documentService.getAllDocuments();
+    public ResponseEntity<List<Document>> getAllDocuments(@RequestParam(value = "birthNumber", required = false) String birthNumber) {
+        List<Document> documents = birthNumber != null
+                ? documentService.getDocumentsByBirthNumber(birthNumber)
+                : documentService.getAllDocuments();
         return ResponseEntity.ok(documents);
     }
 

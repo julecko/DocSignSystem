@@ -90,4 +90,10 @@ public class DocumentService {
     public List<User> searchUsersByBirthNumberPrefix(String prefix) {
         return userRepository.findByBirthNumberStartingWith(prefix);
     }
+
+    public List<Document> getDocumentsByBirthNumber(String birthNumber) {
+        User user = userRepository.findById(birthNumber)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return documentRepository.findByUser(user);
+    }
 }

@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import UploadPage from './pages/UploadPage';
 import SignPage from './pages/SignPage';
 import DocumentsPage from './pages/DocumentsPage';
+import ProfilesPage from "./Pages/ProfilesPage.jsx";
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
                 <Route path="/" element={<UploadPage />} />
                 <Route path="/sign/:id" element={<SignPage />} />
                 <Route path="/documents" element={<DocumentsPage />} />
+                <Route path="/profiles" element={<ProfilesPage />} />
             </Routes>
         </div>
     );

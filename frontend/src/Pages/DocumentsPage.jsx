@@ -1,15 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/main.scss';
 
 function DocumentsPage() {
     const [documents, setDocuments] = useState([]);
+    const [searchParams] = useSearchParams();
+    const birthNumber = searchParams.get('birthNumber');
 
     useEffect(() => {
-        axios
-            .get('http://localhost:8080/api/documents')
-            .then((response) => {
+        const fetchDocuments = async () => {
+            try {
+                const url = birthNumber
+                    ? `http://localhost:8080/api/documents?birthNumber=${birthNumber}`
+                    : 'http://localhost:8080/api/documents';
+                const response = await axios.get(url);
                 const docs = response.data;
-                Promise.all(
+
+                const updatedDocs = await Promise.all(
                     docs.map((doc) =>
                         axios
                             .get(`http://localhost:8080/api/document/${doc.id}`, { responseType: 'blob' })
@@ -17,19 +25,26 @@ function DocumentsPage() {
                                 ...doc,
                                 pdfBlobUrl: URL.createObjectURL(pdfResponse.data),
                             }))
+                            .catch((error) => {
+                                console.error(`Failed to fetch PDF for doc ${doc.id}:`, error);
+                                return { ...doc, pdfBlobUrl: null };
+                            })
                     )
-                )
-                    .then((updatedDocs) => setDocuments(updatedDocs))
-                    .catch((error) => console.error('Failed to fetch PDFs:', error));
-            })
-            .catch((error) => console.error('Failed to fetch documents:', error));
+                );
+                setDocuments(updatedDocs);
+            } catch (error) {
+                console.error('Failed to fetch documents:', error);
+            }
+        };
+
+        fetchDocuments();
 
         return () => {
             documents.forEach((doc) => {
                 if (doc.pdfBlobUrl) URL.revokeObjectURL(doc.pdfBlobUrl);
             });
         };
-    }, []);
+    }, [birthNumber]); // Re-run when birthNumber changes
 
     const handleDownload = (id) => {
         axios
@@ -49,18 +64,20 @@ function DocumentsPage() {
 
     return (
         <div className="documents-page">
-            <h1>All Documents</h1>
+            <h1>{birthNumber ? `Documents for ${birthNumber}` : 'All Documents'}</h1>
             <div className="documents-list">
                 {documents.length > 0 ? (
                     documents.map((doc) => (
                         <div key={doc.id} className="document-item">
                             <div className="document-title">{doc.name || `Document ${doc.id}`}</div>
-                            {doc.pdfBlobUrl && (
+                            {doc.pdfBlobUrl ? (
                                 <embed
                                     src={doc.pdfBlobUrl}
                                     type="application/pdf"
                                     className="pdf-preview"
                                 />
+                            ) : (
+                                <p className="pdf-error">PDF unavailable</p>
                             )}
                             <button onClick={() => handleDownload(doc.id)}>Download</button>
                         </div>
