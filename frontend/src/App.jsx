@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-import UploadPage from './pages/UploadPage';
-import SignPage from './pages/SignPage';
-import DocumentsPage from './pages/DocumentsPage';
+import UploadPage from './Pages/UploadPage.jsx';
+import SignPage from './Pages/SignPage.jsx';
+import DocumentsPage from './Pages/DocumentsPage.jsx';
 import ProfilesPage from "./Pages/ProfilesPage.jsx";
 import Header from "./Components/Header.jsx";
 
