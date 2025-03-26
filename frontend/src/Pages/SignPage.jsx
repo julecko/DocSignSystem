@@ -3,6 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'jq-signature';
 
+// Reuse the same Axios instance
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
+
 function SignPage() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -10,8 +15,8 @@ function SignPage() {
     const [pdfUrl, setPdfUrl] = useState('');
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8080/api/document/${id}`, { responseType: 'blob' })
+        apiClient
+            .get(`/document/${id}`, { responseType: 'blob' })
             .then((response) => {
                 const url = URL.createObjectURL(response.data);
                 setPdfUrl(url);
@@ -40,8 +45,8 @@ function SignPage() {
         if (signatureRef.current) {
             const signatureData = $(signatureRef.current).jqSignature('getDataURL');
             if (signatureData) {
-                axios
-                    .post(`http://localhost:8080/api/sign/${id}`, { signature: signatureData })
+                apiClient
+                    .post(`/sign/${id}`, { signature: signatureData })
                     .then(() => {
                         alert('Document signed and saved!');
                         navigate('/');
@@ -63,10 +68,7 @@ function SignPage() {
         <div>
             <h1>Sign Document</h1>
             {pdfUrl && <embed src={pdfUrl} width="500" height="600" type="application/pdf" />}
-            <div
-                ref={signatureRef}
-                className="js-signature"
-            ></div>
+            <div ref={signatureRef} className="js-signature"></div>
             <button onClick={handleSave}>Save Signature</button>
             <button onClick={handleClear}>Clear Signature</button>
         </div>

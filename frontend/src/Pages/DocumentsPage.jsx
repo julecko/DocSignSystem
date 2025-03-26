@@ -3,6 +3,10 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/main.scss';
 
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
+
 function DocumentsPage() {
     const [documents, setDocuments] = useState([]);
     const [searchParams] = useSearchParams();
@@ -12,15 +16,15 @@ function DocumentsPage() {
         const fetchDocuments = async () => {
             try {
                 const url = birthNumber
-                    ? `http://localhost:8080/api/documents?birthNumber=${birthNumber}`
-                    : 'http://localhost:8080/api/documents';
-                const response = await axios.get(url);
+                    ? `/documents?birthNumber=${birthNumber}`
+                    : '/documents';
+                const response = await apiClient.get(url);
                 const docs = response.data;
 
                 const updatedDocs = await Promise.all(
                     docs.map((doc) =>
-                        axios
-                            .get(`http://localhost:8080/api/document/${doc.id}`, { responseType: 'blob' })
+                        apiClient
+                            .get(`/document/${doc.id}`, { responseType: 'blob' })
                             .then((pdfResponse) => ({
                                 ...doc,
                                 pdfBlobUrl: URL.createObjectURL(pdfResponse.data),
@@ -47,8 +51,8 @@ function DocumentsPage() {
     }, [birthNumber]); // Re-run when birthNumber changes
 
     const handleDownload = (id) => {
-        axios
-            .get(`http://localhost:8080/api/download/${id}`, { responseType: 'blob' })
+        apiClient
+            .get(`/download/${id}`, { responseType: 'blob' })
             .then((response) => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');

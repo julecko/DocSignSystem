@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/main.scss';
 
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
+
 function ProfilesPage() {
     const [profiles, setProfiles] = useState([]);
     const navigate = useNavigate();
@@ -10,7 +14,7 @@ function ProfilesPage() {
     useEffect(() => {
         const fetchProfiles = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/users/search?prefix=');
+                const response = await apiClient.get('/users/search?prefix=');
                 setProfiles(response.data);
             } catch (error) {
                 console.error('Failed to fetch profiles:', error);

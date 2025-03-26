@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/main.scss';
 
+// Set Axios base URL once, using the env variable
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+});
+
 function UploadPage() {
     const [file, setFile] = useState(null);
     const [birthNumber, setBirthNumber] = useState('');
@@ -59,7 +64,7 @@ function UploadPage() {
 
     const searchUsers = async (prefix) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/users/search?prefix=${prefix}`);
+            const response = await apiClient.get(`/users/search?prefix=${prefix}`);
             setSearchResults(response.data);
         } catch (error) {
             console.error('Search failed:', error);
@@ -69,7 +74,7 @@ function UploadPage() {
 
     const checkExactBirthNumber = async (value) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/user/${value}`);
+            const response = await apiClient.get(`/user/${value}`);
             if (response.status === 200) {
                 const user = response.data;
                 setUserExists(true);
@@ -121,7 +126,7 @@ function UploadPage() {
             if (phone) formData.append('phone', phone);
         }
         try {
-            const response = await axios.post('http://localhost:8080/api/upload', formData);
+            const response = await apiClient.post('/upload', formData);
             navigate(`/sign/${response.data}`);
         } catch (error) {
             console.error('Upload failed', error);
