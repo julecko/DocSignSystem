@@ -11,7 +11,7 @@ function SignPage() {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:8080/api/document/${id}`, { responseType: 'blob' })
+            .get(`/api/document/${id}`, { responseType: 'blob' })
             .then((response) => {
                 const url = URL.createObjectURL(response.data);
                 setPdfUrl(url);
@@ -41,7 +41,7 @@ function SignPage() {
             const signatureData = $(signatureRef.current).jqSignature('getDataURL');
             if (signatureData) {
                 axios
-                    .post(`http://localhost:8080/api/sign/${id}`, { signature: signatureData })
+                    .post(`/api/sign/${id}`, { signature: signatureData })
                     .then(() => {
                         alert('Document signed and saved!');
                         navigate('/');

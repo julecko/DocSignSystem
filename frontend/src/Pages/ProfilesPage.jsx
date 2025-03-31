@@ -10,7 +10,7 @@ function ProfilesPage() {
     useEffect(() => {
         const fetchProfiles = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/users/search?prefix=');
+                const response = await axios.get('/api/users/search?prefix=');
                 setProfiles(response.data);
             } catch (error) {
                 console.error('Failed to fetch profiles:', error);

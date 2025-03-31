@@ -12,15 +12,15 @@ function DocumentsPage() {
         const fetchDocuments = async () => {
             try {
                 const url = birthNumber
-                    ? `http://localhost:8080/api/documents?birthNumber=${birthNumber}`
-                    : 'http://localhost:8080/api/documents';
+                    ? `/api/documents?birthNumber=${birthNumber}`
+                    : '/api/documents';
                 const response = await axios.get(url);
                 const docs = response.data;
 
                 const updatedDocs = await Promise.all(
                     docs.map((doc) =>
                         axios
-                            .get(`http://localhost:8080/api/document/${doc.id}`, { responseType: 'blob' })
+                            .get(`/api/document/${doc.id}`, { responseType: 'blob' })
                             .then((pdfResponse) => ({
                                 ...doc,
                                 pdfBlobUrl: URL.createObjectURL(pdfResponse.data),
@@ -48,7 +48,7 @@ function DocumentsPage() {
 
     const handleDownload = (id) => {
         axios
-            .get(`http://localhost:8080/api/download/${id}`, { responseType: 'blob' })
+            .get(`/api/download/${id}`, { responseType: 'blob' })
             .then((response) => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
